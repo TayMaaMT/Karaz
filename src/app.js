@@ -12,7 +12,7 @@ app.use('/api/user', user);
 app.use('/api/forgetPassword', forgetPassword);
 app.use('/api/verifyAccount', verifyAccount);
 app.get('/', (req, res) => {
-    res.send('this is simple login');
+    res.send('hi');
 });
 
 port = 3000 || process.env.PORT;
