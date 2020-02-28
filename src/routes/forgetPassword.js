@@ -9,6 +9,7 @@ router.get('/SendSMS', async function(req, res) {
         const random = GenarateRandom();
         user['random'] = random;
         await user.save();
+        console.log(user);
         let text = "code to reset password ( " + random + " )";
         nexmo.message.sendSms("Nexmo", user.phone, text, { type: "unicode" }, (err, responseData) => {
             if (err) {
@@ -27,7 +28,7 @@ router.get('/SendSMS', async function(req, res) {
             }
         })
     } catch (err) {
-        res.send(err);
+        res.send({ Error: "connot find user" });
     }
 })
 
