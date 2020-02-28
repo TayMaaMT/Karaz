@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
     res.send('this is simple login');
 });
 
-
-app.listen(3000, () => {
-    console.log("your server is running on poort 3000");
+port = 3000 || process.env.PORT;
+app.listen(port, () => {
+    console.log("your server is running on poort " + port);
 })
