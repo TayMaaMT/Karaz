@@ -4,7 +4,7 @@ const { nexmo, transporter, GenarateRandom } = require('../config/sender_config'
 require('dotenv').config();
 let host = "";
 
-const Auth = require('../middleware/Auth');
+const Auth = require('../middleware/auth');
 const verification = require('../middleware/verification');
 
 router.get('/SendSMS', verification, async function(req, res) {
