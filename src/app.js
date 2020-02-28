@@ -12,9 +12,9 @@ app.use('/api/user', user);
 app.use('/api/forgetPassword', forgetPassword);
 app.use('/api/verifyAccount', verifyAccount);
 app.get('/', (req, res) => {
-    res.send('hi');
+    res.send('Wellcom to Karaz API .... /n Please enjoy');
 });
-
+3000 || process.env.PORT
 app.listen(process.env.PORT || 3000, () => {
     console.log("your server is running on port ");
 })
