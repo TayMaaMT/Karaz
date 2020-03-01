@@ -4,7 +4,7 @@ const cors = require('cors')
 const user = require('./routes/user');
 const forgetPassword = require('./routes/forgetPassword');
 const verifyAccount = require('./routes/verifyAccount');
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const app = exprss();
 
 
