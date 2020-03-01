@@ -3,11 +3,7 @@ const passport = require('passport');
 const auth = require('../middleware/auth');
 const User = require('../models/user');
 const validate = require('../middleware/validate');
-const cors = require('cors')
 
-app.use(cors({
-    credentials: true
-}))
 
 router.get('/signup', (req, res) => {
     res.send('sign up  page');
