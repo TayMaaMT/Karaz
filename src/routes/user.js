@@ -1,18 +1,23 @@
 const router = require('express').Router();
+const passport = require('passport');
 const auth = require('../middleware/auth');
 const User = require('../models/user');
 const validate = require('../middleware/validate');
+const cors = require('cors')
+
+app.use(cors({
+    credentials: true
+}))
 
 router.get('/signup', (req, res) => {
     res.send('sign up  page');
 })
 
 router.post('/signup', validate, async(req, res) => {
-
-    const data = new User(req.body);
+    const { name, email, phone, password } = req.body;
+    const data = new User({ name, email, phone, password });
     try {
         const user = await data.save();
-        console.log(data);
         const token = await data.genarateAuthToken();
         res.status(201).send({ token: token });
     } catch (err) {
@@ -21,7 +26,6 @@ router.post('/signup', validate, async(req, res) => {
 })
 
 router.post('/login', async(req, res) => {
-
     try {
         const user = await User.findByCredentials(req.body.email, req.body.phone, req.body.password);
         const token = await user.genarateAuthToken();
@@ -37,6 +41,24 @@ router.get('/profile', auth, async(req, res) => {
     } catch (err) {
         res.status(500).send(err);
     }
+})
+
+router.get('/google', passport.authenticate('google', {
+    scope: ['profile', 'email']
+}))
+router.get('/google/redirect', passport.authenticate('google', { failureRedirect: "/", session: false }), async(req, res) => {
+    //res.redirect('https://vigorous-banach-0d7189.netlify.com/profile')
+    const token = await req.user.genarateAuthToken();
+    res.status(200).json({ token: token });
+})
+
+router.get('/facebook', passport.authenticate('facebook', { scope: "email" }))
+router.get('/facebook/redirect', passport.authenticate('facebook', { failureRedirect: "/", session: false }), async(req, res) => {
+    const token = await req.user.genarateAuthToken();
+    res.status(200).json({ token: token });
+
+
+
 })
 
 module.exports = router;

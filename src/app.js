@@ -1,9 +1,12 @@
 const exprss = require('express');
+const passport = require('passport');
 const user = require('./routes/user');
 const forgetPassword = require('./routes/forgetPassword');
 const verifyAccount = require('./routes/verifyAccount');
 const bodyParser = require('body-parser');
 const app = exprss();
+app.use(passport.initialize());
+require('./config/passport');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const env = require('dotenv').config();
@@ -14,7 +17,7 @@ app.use('/api/verifyAccount', verifyAccount);
 app.get('/', (req, res) => {
     res.send('Wellcom to Karaz API .... /n Please enjoy');
 });
-3000 || process.env.PORT
-app.listen(process.env.PORT || 3000, () => {
-    console.log("your server is running on port ");
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log("your server is running on port " + port);
 })

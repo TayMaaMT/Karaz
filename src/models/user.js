@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         minlength: 9,
         trim: true,
-        required: true,
+
         validate(data) {
             if (data.toLowerCase().includes("password")) {
                 throw new Error("invalide password");
@@ -68,6 +68,29 @@ userSchema.methods.genarateAuthToken = async function() {
     const user = this
     const token = jwt.sign({ _id: user._id.toString() }, process.env.TOKEN_KEY)
     return token;
+
+}
+
+userSchema.statics.Vatidation = async(email, phone) => {
+    if (email || phone) {
+        if (email) {
+            const dupEmail = await User.findOne({ email });
+            if (dupEmail) {
+                return { Error: "duplicated email" }
+            } else {
+                return { success: "email valid" }
+            }
+        } else {
+            const dupPhone = await User.findOne({ phone });
+            if (dupPhone) {
+                return { Error: "duplicated phone" }
+            } else {
+                return { success: "phone valid" }
+            }
+        }
+    } else {
+        return { Error: "you should provide email or phone number" }
+    }
 
 }
 
