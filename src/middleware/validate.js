@@ -6,7 +6,7 @@ const validate = async(req, res, next) => {
         const data = await User.Vatidation(email, phone);
         data.success ? next() : res.send({ Error: data.Error });
     } catch (err) {
-        res.send({ Error: err });
+        res.status(400).json({ Error: err });
     }
 }
 
