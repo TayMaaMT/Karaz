@@ -42,6 +42,7 @@ passport.use(
                 if (user) {
                     user.facebookID = profile.id;
                     await user.save();
+                    done(null, user);
                 } else {
                     const newUser = new User({
                         name: profile._json.name,
@@ -73,6 +74,7 @@ passport.use(
                 if (user) {
                     user.googleID = profile.id;
                     await user.save();
+                    done(null, user);
                 } else {
                     const newUser = new User({
                         name: profile.displayName,
