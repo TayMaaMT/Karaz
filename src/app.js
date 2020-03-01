@@ -1,5 +1,5 @@
 const exprss = require('express');
-// const passport = require('passport');
+const passport = require('passport');
 const cors = require('cors')
 const user = require('./routes/user');
 const forgetPassword = require('./routes/forgetPassword');
@@ -9,10 +9,10 @@ const app = exprss();
 
 
 app.use(cors({
-        credentials: true
-    }))
-    // app.use(passport.initialize());
-    // require('./config/passport');
+    credentials: true
+}))
+app.use(passport.initialize());
+require('./config/passport');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const env = require('dotenv').config();
