@@ -31,7 +31,7 @@ app.use('/api/forgetPassword', forgetPassword);
 app.use('/api/verifyAccount', verifyAccount);
 app.get('/', (req, res) => {
     const ip = getCallerIP(req);
-    res.send('Wellcom to Karaz API .... /n Please enjoy' + ip);
+    res.send('Wellcom to Karaz API .... your IP is :' + ip);
 });
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
