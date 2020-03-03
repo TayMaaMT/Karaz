@@ -7,6 +7,15 @@ const verifyAccount = require('./routes/verifyAccount');
 const bodyParser = require('body-parser');
 const app = exprss();
 
+function getCallerIP(request) {
+    var ip = request.headers['x-forwarded-for'] ||
+        request.connection.remoteAddress ||
+        request.socket.remoteAddress ||
+        request.connection.socket.remoteAddress;
+    ip = ip.split(',')[0];
+    ip = ip.split(':').slice(-1); //in case the ip returned in a format: "::ffff:146.xxx.xxx.xxx"
+    return ip;
+}
 
 app.use(cors({
     credentials: true
@@ -21,7 +30,8 @@ app.use('/api/user', user);
 app.use('/api/forgetPassword', forgetPassword);
 app.use('/api/verifyAccount', verifyAccount);
 app.get('/', (req, res) => {
-    res.send('Wellcom to Karaz API .... /n Please enjoy');
+    const ip = getCallerIP(req);
+    res.send('Wellcom to Karaz API .... /n Please enjoy' + ip);
 });
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
