@@ -62,6 +62,31 @@ router.get('/sendEmail', verification, async function(req, res) {
 
 });
 
+router.get('/sendEmailCode', verification, async function(req, res) {
+    try {
+        const random = GenarateRandom();
+        req.user['random'] = random;
+        await req.user.save();
+        const mailOptions = {
+            to: req.user.email,
+            subject: "Please confirm your Email account",
+            html: "Hello,<br> code to verify account ( " + random + " ) "
+        }
+        transporter.sendMail(mailOptions, function(error, response) {
+            if (error) {
+                res.status(400).json({ Error: error });
+
+            } else {
+                res.status(200).json({ sucess: "sent email" });
+
+            }
+        });
+    } catch (err) {
+        console.log(err);
+    }
+
+});
+
 router.post('/CodeVerify', verification, async function(req, res) {
     try {
         if (req.user.random == req.body.random && req.body.random != null) {
@@ -78,6 +103,7 @@ router.post('/CodeVerify', verification, async function(req, res) {
 
     }
 });
+
 
 
 router.get('/verify', async function(req, res) {
