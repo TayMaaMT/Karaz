@@ -5,6 +5,7 @@ const user = require('./routes/user');
 const forgetPassword = require('./routes/forgetPassword');
 const verifyAccount = require('./routes/verifyAccount');
 const bodyParser = require('body-parser');
+var macaddress = require('macaddress');
 const app = exprss();
 
 function getCallerIP(request) {
@@ -30,8 +31,12 @@ app.use('/api/user', user);
 app.use('/api/forgetPassword', forgetPassword);
 app.use('/api/verifyAccount', verifyAccount);
 app.get('/', (req, res) => {
-    const ip = getCallerIP(req);
-    res.send('Wellcom to Karaz API .... your IP is :' + ip);
+
+    macaddress.all(function(err, all) {
+        const ip = getCallerIP(req);
+        res.send('Wellcom to Karaz API .... your IP is :' + ip + "macAddress" + JSON.stringify(all, null, 2));
+    });
+
 });
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
