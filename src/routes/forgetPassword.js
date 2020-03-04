@@ -31,6 +31,41 @@ router.get('/SendSMS', async function(req, res) {
     }
 })
 
+router.post('/FindAccount', async function(req, res) {
+    try {
+        if (req.body.email) {
+            const user = await User.findOne({ email: req.body.email });
+            res.status(200).json({
+                user: {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone
+                }
+            });
+        } else if (req.body.email) {
+            const user = await User.findOne({ phone: req.body.phone });
+            res.status(200).json({
+                user: {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone
+                }
+            });
+
+        } else {
+            res.status(400).json({ Error: "bad request" });
+        }
+
+
+    } catch (err) {
+        res.status(400).json({ Error: error });
+    }
+
+
+})
+
 
 router.post('/sendEmail', async function(req, res) {
     try {
