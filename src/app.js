@@ -32,7 +32,7 @@ app.use('/api/forgetPassword', forgetPassword);
 app.use('/api/verifyAccount', verifyAccount);
 app.get('/', (req, res) => {
 
-    macaddress.all(function(err, all) {
+    req.macaddress.all(function(err, all) {
         const ip = getCallerIP(req);
         res.send('Wellcom to Karaz API .... your IP is :' + ip + "macAddress" + JSON.stringify(all, null, 2));
     });
