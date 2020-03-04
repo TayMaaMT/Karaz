@@ -9,7 +9,6 @@ router.get('/SendSMS', async function(req, res) {
         const random = GenarateRandom();
         user['random'] = random;
         await user.save();
-        console.log(user);
         let text = "code to reset password ( " + random + " )";
         nexmo.message.sendSms("Nexmo", user.phone, text, { type: "unicode" }, (err, responseData) => {
             if (err) {
@@ -36,15 +35,16 @@ router.get('/SendSMS', async function(req, res) {
 router.post('/sendEmail', async function(req, res) {
     try {
         const user = await User.findOne({ email: req.body.email });
-        console.log(user);
         const random = GenarateRandom();
         user['random'] = random;
         await user.save();
+
         const mailOptions = {
             to: user.email,
             subject: "Reset Password",
             html: "<h1>Hello</h1>,<br> <h3> use this code to reset your password ( " + random + " )></h3>"
         }
+
         transporter.sendMail(mailOptions, function(error, response) {
             if (error) {
                 res.status(400).json({ Error: error });
@@ -81,7 +81,7 @@ router.patch('/changePassword', async function(req, res) {
             await user.save();
             res.status(200).json({ sucess: "change password success!" });
         } else {
-            res.status(400).json({ Error: "Tow password dosent mach" });
+            res.status(400).json({ Error: "Tow password does not mach" });
         }
     } catch (err) {
         res.status(400).json({ Error: "bad request" });
