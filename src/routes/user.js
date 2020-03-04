@@ -45,7 +45,7 @@ router.get('/google', passport.authenticate('google', {
 router.get('/google/redirect', passport.authenticate('google', { failureRedirect: "/", session: false }), async(req, res) => {
     //res.redirect('https://vigorous-banach-0d7189.netlify.com/profile')
     const token = await req.user.genarateAuthToken();
-    res.redirect("http://localhost:3000?token=" + token);
+    res.redirect("http://localhost:3000/verify-account/?token=" + token);
     //res.status(200).json({ token: token });
 })
 
