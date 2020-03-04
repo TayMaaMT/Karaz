@@ -114,7 +114,8 @@ router.get('/verify', async function(req, res) {
                 user['Account_verified'] = true;
                 user['random'] = null;
                 await user.save();
-                res.status(200).json({ sucess: "Account has been Successfully verified " + user });
+                // res.status(200).json({ sucess: "Account has been Successfully verified " + user });
+                res.redirect('http://localhost:3000/verify-account');
             } else {
                 res.status(400).json({ Error: "Bad Request" });
             }
