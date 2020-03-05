@@ -10,10 +10,11 @@ const auth = async(req, res, next) => {
         const user = await User.findOne({ _id: deacode._id });
         if (!user) {
             res.status(400).json("Error :please authanticate");
-        } else if (!user.Account_verified) {
-            res.status(201).json({ Error: "please verify your Account" });
-
         }
+        // } else if (!user.Account_verified) {
+        //     res.status(201).json({ Error: "please verify your Account" });
+
+        // }
         req.token = token;
         req.user = user;
         next();
