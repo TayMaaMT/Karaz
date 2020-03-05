@@ -11,7 +11,7 @@ const auth = async(req, res, next) => {
         if (!user) {
             res.status(400).json("Error :please authanticate");
         } else if (!user.Account_verified) {
-            res.status(300).json({ Error: "please verify your Account" });
+            res.status(201).json({ Error: "please verify your Account" });
 
         }
         req.token = token;
