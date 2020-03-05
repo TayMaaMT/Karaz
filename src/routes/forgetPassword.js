@@ -35,24 +35,24 @@ router.post('/FindAccount', async function(req, res) {
     try {
         if (req.body.email) {
             const user = await User.findOne({ email: req.body.email });
-            res.status(200).json({
+            user ? res.status(200).json({
                 user: {
                     _id: user._id,
                     name: user.name,
                     email: user.email,
                     phone: user.phone
                 }
-            });
+            }) : res.status(400).json({ Error: "Account not found" });
         } else if (req.body.phone) {
             const user = await User.findOne({ phone: req.body.phone });
-            res.status(200).json({
+            user ? res.status(200).json({
                 user: {
                     _id: user._id,
                     name: user.name,
                     email: user.email,
                     phone: user.phone
                 }
-            });
+            }) : res.status(400).json({ Error: "Account not found" });
 
         } else {
             res.status(400).json({ Error: "bad request" });
