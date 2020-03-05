@@ -9,17 +9,13 @@ const auth = async(req, res, next) => {
         const deacode = jwt.verify(token, process.env.TOKEN_KEY);
         const user = await User.findOne({ _id: deacode._id });
         if (!user) {
-            res.status(400).json("Error :please authanticate");
+            throw new Error();
         }
-        // } else if (!user.Account_verified) {
-        //     res.status(201).json({ Error: "please verify your Account" });
-
-        // }
         req.token = token;
         req.user = user;
         next();
     } catch (err) {
-        res.status(400).json("Error :please authanticate");
+        res.status(500).send("Error :please authanticate");
     }
 
 }
