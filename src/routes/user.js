@@ -9,6 +9,28 @@ router.get('/signup', (req, res) => {
     res.send('sign up  page');
 })
 
+router.post('/findUser', async function(req, res) {
+    try {
+        if (req.body.email) {
+            const user = await User.findOne({ email: req.body.email });
+            user ? res.status(400).json({ faild: "duplicated email" }) : res.status(200).json({ sucess: "uniqe email" })
+
+        } else if (req.body.phone) {
+            const user = await User.findOne({ phone: req.body.phone });
+            user ? res.status(400).json({ faild: "duplicated phone" }) : res.status(200).json({ sucess: "uniqe phone" })
+
+        } else {
+            res.status(400).json({ Error: "bad request" });
+        }
+
+
+    } catch (err) {
+        res.status(400).json({ Error: error });
+    }
+
+
+})
+
 router.post('/signup', validate, async(req, res) => {
     const { name, email, phone, password } = req.body;
     const data = new User({ name, email, phone, password });
