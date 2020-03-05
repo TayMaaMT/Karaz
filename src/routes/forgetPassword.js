@@ -43,7 +43,7 @@ router.post('/FindAccount', async function(req, res) {
                     phone: user.phone
                 }
             });
-        } else if (req.body.email) {
+        } else if (req.body.phone) {
             const user = await User.findOne({ phone: req.body.phone });
             res.status(200).json({
                 user: {
