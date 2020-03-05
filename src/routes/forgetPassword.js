@@ -107,7 +107,7 @@ router.post('/verifyCode', async function(req, res) {
     }
 });
 
-router.post('/changePassword', async function(req, res) {
+router.patch('/changePassword', async function(req, res) {
     try {
         const user = await User.findUserWithRandom(req.body._id, req.body.random);
         user['random'] = null;
